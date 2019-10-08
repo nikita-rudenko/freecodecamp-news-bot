@@ -4,8 +4,6 @@
 // init project
 const express = require("express");
 const bodyParser = require("body-parser");
-// Telegram API
-const { Telegram } = require("telegraf");
 // scraping
 const rp = require("request-promise");
 const $ = require("cheerio");
@@ -14,19 +12,17 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const telegram = new Telegram(process.env.BOT_TOKEN);
+const { postLinksToTelegram } = require("./telegramCtrl");
+
 const baseUrl = process.env.BASE_URL;
 
 app.get("/sync", (req, res) => {
   const links = [];
 
-  // TODO: post articles in chronological order
-  // TODO: check and post only for fresh articles (consider cron-jobs)
-
+  // TODO: check and post only fresh articles (consider cron-jobs)
   rp(baseUrl)
     .then(html => {
       const articles = $(".post-card-title > a", html);
-      console.log(articles);
 
       $(articles).each((i, article) => {
         links.push(
@@ -36,23 +32,13 @@ app.get("/sync", (req, res) => {
         );
       });
 
-      links.map(text => {
-        telegram.sendMessage(process.env.CHANNEL_ID, text, {
-          disable_notification: true
-        });
-      });
+      postLinksToTelegram(links.reverse());
     })
     .catch(err => {
       console.log(err);
     });
 
   res.send("Synced");
-});
-
-app.use(express.static("public"));
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
 });
 
 // listen for requests :)
