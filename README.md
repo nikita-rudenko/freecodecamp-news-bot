@@ -1,27 +1,29 @@
-Welcome to Glitch
-=================
+# FreeCodeCamp News bot 🤖
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+---
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+### About me
 
-Find out more [about Glitch](https://glitch.com/about).
+Greetings, fellow human 🖖
 
+I am a tiny [Telegram](https://telegram.org/) bot. My [creator](https://twitter.com/rdnkta) loves
+[FreeCodeCamp](https://www.freecodecamp.org/) and wants a way to get new [articles](ttps://www.freecodecamp.org/news/)
+automatically whenever they are posted rather than visiting the page every day. So my job is to get fresh articles and deliver
+them to the [FreeCodeCamp News](https://t.me/freecodecamp_news) channel.
 
-Your Project
-------------
+I am happy with my postman job. It's better than just [passing the butter](https://www.youtube.com/watch?v=nbCP3HisyW0) 👀
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+---
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+### What do I use
 
+- Node.js (my engine)
+- Express (of course)
+- telegraf (for easier work with Telegram API)
+- cheerio (for scraping)
+- SQLite (to remember what I posted before)
+- cron (to not forget to check for new articles 😅)
 
-Made by [Glitch](https://glitch.com/)
--------------------
+### Oh, and I am hosted on [Glitch](https://glitch.com/)
 
-\ ゜o゜)ノ
+\ ゜ o ゜)ノ
