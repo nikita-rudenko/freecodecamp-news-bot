@@ -10,6 +10,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
 app.get(process.env.UPDATE_URL, (req, res) => {
   getNews();
   res.send("Updated");

@@ -1,7 +1,3 @@
-# FreeCodeCamp News bot 🤖
-
----
-
 ### About me
 
 Greetings, fellow human 🖖
@@ -24,6 +20,6 @@ I am happy with my postman job. It's better than just [passing the butter](https
 - SQLite (to remember what I posted before)
 - cron (to not forget to check for new articles 😅)
 
-### Oh, and I am hosted on [Glitch](https://glitch.com/)
+### Oh, and I am hosted on [here](https://freecodecamp-news-bot.herokuapp.com/) on Heroku
 
 \ ゜ o ゜)ノ
