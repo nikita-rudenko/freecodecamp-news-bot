@@ -2,6 +2,7 @@ const rp = require("request-promise");
 const $ = require("cheerio");
 
 const { sendErrorByEmail } = require("./mail");
+const { postLinksToTelegram } = require("./telegram");
 
 const baseUrl = process.env.BASE_URL;
 

@@ -5,7 +5,9 @@ const dbCtrl = require("./db");
 const { Telegram } = require("telegraf");
 const telegram = new Telegram(process.env.BOT_TOKEN);
 
-exports.postLinksToTelegram = linksArr =>
+exports.postLinksToTelegram = linksArr => {
+  dbCtrl.createTable()
+
   dbCtrl.getAll(async rowsFromDB => {
     // get snapshot array from DB
     const linksFromDB = await rowsFromDB.map(row => row.link);
@@ -30,4 +32,5 @@ exports.postLinksToTelegram = linksArr =>
     dbCtrl.deleteAll();
     // insert new snapshot
     dbCtrl.insertAll(linksArr);
-  });
+  })
+};
