@@ -1,6 +1,8 @@
 const rp = require("request-promise");
 const $ = require("cheerio");
 
+const { sendErrorByEmail } = require("./mail");
+
 const baseUrl = process.env.BASE_URL;
 
 exports.getNews = () => {
@@ -20,7 +22,7 @@ exports.getNews = () => {
       // reverse() for posting in a chronological order
       postLinksToTelegram(links.reverse());
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(async (err) => {
+      await sendErrorByEmail(err)
     });
 };
