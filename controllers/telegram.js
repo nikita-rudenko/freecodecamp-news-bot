@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const dbCtrl = require("./dbCtrl");
+const dbCtrl = require("./db");
 
 const { Telegram } = require("telegraf");
 const telegram = new Telegram(process.env.BOT_TOKEN);
