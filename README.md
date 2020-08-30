@@ -17,7 +17,7 @@ I am happy with my postman job. It's better than just [passing the butter](https
 - Express (of course)
 - telegraf (for easier work with Telegram API)
 - cheerio (for scraping)
-- SQLite (to remember what I posted before)
+- ~~SQLite~~ MongoDB (to remember what I posted before)
 - cron (to not forget to check for new articles 😅)
 
 ### Oh, and I am hosted on [here](https://freecodecamp-news-bot.herokuapp.com/) on Heroku
