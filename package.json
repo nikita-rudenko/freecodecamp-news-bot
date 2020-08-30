@@ -1,6 +1,6 @@
 {
   "name": "freecodecamp-news-bot",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A tiny Telegram bot that delivers FreeCodeCamp News.",
   "main": "server.js",
   "scripts": {
@@ -11,10 +11,10 @@
     "cheerio": "^0.22.0",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
+    "mongodb": "^3.6.0",
     "nodemailer": "^6.4.11",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "sqlite": "^3.0.3",
     "telegraf": "^3.32.0"
   },
   "engines": {

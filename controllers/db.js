@@ -1,32 +1,35 @@
-const dbFile = "./.data/sqlite.db";
-const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database(dbFile);
+const { MongoClient } = require("mongodb");
+const dbName = "bot";
+const colName = "links";
 
-exports.createTable = () => {
-  db.run("CREATE TABLE IF NOT EXISTS Links (link TEXT)");
-};
+let db;
 
-exports.insertAll = (links) => {
-  const query = links.map((link) => `("${link}")`).join(", ");
-
-  db.serialize(() => {
-    db.run(`INSERT INTO Links (link) VALUES ${query}`);
+const init = () => {
+  MongoClient.connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then((client) => {
+    db = client.db(dbName);
   });
 };
 
-exports.getAll = (callback) => {
-  db.serialize(() => {
-    db.all("SELECT * FROM Links", (err, rows) => {
-      if (err != null) {
-        console.log(err);
-        callback(err);
-      }
+const insertLinks = (links) => {
+  const docs = links.reduce((acc, link) => {
+    acc.push({ link });
+    return acc;
+  }, []);
 
-      return callback(rows);
-    });
-  });
+  return db.collection(colName).insertMany(docs);
 };
 
-exports.deleteAll = () => {
-  db.each("DELETE FROM Links");
+const deleteAllLinks = () => {
+  return db.collection(colName).deleteMany({});
 };
+
+const getAllLinks = async () => {
+  const allLinks = await db.collection(colName).find({}).toArray();
+
+  return allLinks.map(({ link }) => link);
+};
+
+module.exports = { init, insertLinks, deleteAllLinks, getAllLinks };

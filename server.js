@@ -4,11 +4,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const { getNews } = require("./controllers/scraper");
+const db = require('./controllers/db')
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+db.init()
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');

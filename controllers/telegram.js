@@ -1,36 +1,25 @@
-const fs = require("fs");
-
-const dbCtrl = require("./db");
+const db = require("./db");
 
 const { Telegram } = require("telegraf");
 const telegram = new Telegram(process.env.BOT_TOKEN);
 
-exports.postLinksToTelegram = linksArr => {
-  dbCtrl.createTable()
+exports.postLinksToTelegram = async (scrapedLinks) => {
+  const savedLinks = await db.getAllLinks();
 
-  dbCtrl.getAll(async rowsFromDB => {
-    // get snapshot array from DB
-    const linksFromDB = await rowsFromDB.map(row => row.link);
+  const freshLinks = scrapedLinks.filter((link) => !savedLinks.includes(link));
 
-    // compare new array and snapshot array from DB
-    const freshLinks = await linksArr.filter(
-      link => !linksFromDB.includes(link)
-    );
+  if (freshLinks.length === 0) return;
 
-    if (!freshLinks) return;
+  // post fresh links in chronological order
+  for (let i = 0; i < freshLinks.length; i++) {
+    const text = freshLinks[i];
+    await telegram.sendMessage(process.env.CHANNEL_ID, text, {
+      disable_notification: true,
+    });
+  }
 
-    // post fresh links in chronological order
-    for (let i = 0; i < freshLinks.length; i++) {
-      const text = freshLinks[i];
-
-      await telegram.sendMessage(process.env.CHANNEL_ID, text, {
-        disable_notification: true
-      });
-    }
-
-    // reset snapshot
-    dbCtrl.deleteAll();
-    // insert new snapshot
-    dbCtrl.insertAll(linksArr);
-  })
+  // reset snapshot
+  await db.deleteAllLinks();
+  // insert new snapshot
+  await db.insertLinks(freshLinks);
 };
