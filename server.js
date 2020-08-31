@@ -17,9 +17,9 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get(process.env.UPDATE_URL, (req, res) => {
-  getNews();
-  res.send("Updated");
+app.get(process.env.UPDATE_URL, async (req, res) => {
+  const newPosts = await getNews();
+  res.json({ newPosts });
 });
 
 // listen for requests :)

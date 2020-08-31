@@ -6,11 +6,11 @@ const { postLinksToTelegram } = require("./telegram");
 
 const baseUrl = process.env.BASE_URL;
 
-exports.getNews = () => {
+exports.getNews = async () => {
   const links = [];
 
-  rp(baseUrl)
-    .then((html) => {
+  return rp(baseUrl)
+    .then(async (html) => {
       // get all artlcles on the page
       const articles = $(".post-card-title > a", html);
 
@@ -21,7 +21,8 @@ exports.getNews = () => {
       });
 
       // reverse() for posting in a chronological order
-      postLinksToTelegram(links.reverse());
+      const newPosts = await postLinksToTelegram(links.reverse());
+      return newPosts
     })
     .catch(async (err) => {
       await sendErrorByEmail(err)

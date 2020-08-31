@@ -22,4 +22,6 @@ exports.postLinksToTelegram = async (scrapedLinks) => {
   await db.deleteAllLinks();
   // insert new snapshot
   await db.insertLinks(scrapedLinks);
+
+  return freshLinks
 };
